@@ -1,0 +1,35 @@
+version: 2
+
+source:
+  repository: TavallStudios/tavall-reflection
+  provider: github
+
+build:
+  type: gradle
+  java: 25
+  gradle: 9.6.1
+
+resources:
+  mode: SYSTEM
+
+artifacts:
+  - name: tavall-reflection
+    path: build/tavall-ci-artifacts/tavall-reflection.jar
+
+requiredChecks:
+  - quality
+
+checks:
+  quality:
+    executor: gradle
+    tasks:
+      - "clean"
+      - "check"
+      - "assemble"
+      - tavallCiArtifact
+
+  artifact:
+    executor: gradle
+    tasks:
+      - tavallCiArtifact
+    includeInAll: false
